@@ -36,14 +36,14 @@ public class SoundGoodMusicDAO
     private PreparedStatement findAllAvailableInstrumentStmt;
     private PreparedStatement findAllRentedInstrumentStmt;
     private PreparedStatement findRentedInstrumentsByStudentIdStmt;
-    private PreparedStatement findStudentBorrowedInstrumentCountStmt;
-    private PreparedStatement findAvailableInstrumentsByTypeStmt;
-    private PreparedStatement findInstrumentIfAvailableByIdStmt;
-    private PreparedStatement updateInventoryByInstrumentIdStmt;
-    private PreparedStatement recordNewRentalStmt;
     private PreparedStatement findRentedInstrumentByRentIdStmt;
+    private PreparedStatement findAvailableInstrumentsByTypeStmt;
+    private PreparedStatement findAvailableInstrumentByIdStmt;
+    private PreparedStatement updateInventoryByInstrumentIdStmt;
+    private PreparedStatement findStudentBorrowedInstrumentCountStmt;
+    private PreparedStatement recordNewRentalStmt;
     private PreparedStatement findStudentBorrowedInstrumentCountLockingForUpdateStmt;
-    private PreparedStatement findInstrumentIfAvailableByIdLockingForUpdateStmt;
+    private PreparedStatement findAvailableInstrumentByIdLockingForUpdateStmt;
     private PreparedStatement findRentedInstrumentByRentIdLockingForUpdateStmt;
     private PreparedStatement terminateRentalStmt;
 
@@ -279,8 +279,8 @@ public class SoundGoodMusicDAO
     public RentalInstrument findInstrumentIfAvailableById(int instrumentId, boolean lockingExclusive) throws DatabaseException
     {
         String failureMsg = "Could not list instruments";
-        PreparedStatement stmtToExecute = lockingExclusive ? findInstrumentIfAvailableByIdLockingForUpdateStmt
-                                                           : findInstrumentIfAvailableByIdStmt;
+        PreparedStatement stmtToExecute = lockingExclusive ? findAvailableInstrumentByIdLockingForUpdateStmt
+                                                           : findAvailableInstrumentByIdStmt;
         ResultSet result = null;
         RentalInstrument rentalInstrument = null;
         try
@@ -458,7 +458,7 @@ public class SoundGoodMusicDAO
                 " IS NULL), 0) AS number_of_borrowed_ins FROM "+ STU_TBL + " AS S WHERE S." + STU_PK_COL + " = ? FOR NO KEY UPDATE"
         );
 
-        findInstrumentIfAvailableByIdStmt = connection.prepareStatement(
+        findAvailableInstrumentByIdStmt = connection.prepareStatement(
                 "SELECT I." + INST_PK_COL + ", Inv." + INV_NO_OF_INST + " FROM " +INST_TBL + " AS I JOIN " + INV_TBL +
                 " AS Inv ON I." + INST_FK_INV_COL + " = Inv." + INV_PK_COL + " JOIN " + RENT_SYS_TBL + " AS RS ON I." +
                 INST_PK_COL + " = RS." + RENT_SYS_FK_INST_COL + " WHERE I." + INST_PK_COL + " = ? AND NOT EXISTS ( " +
@@ -466,7 +466,7 @@ public class SoundGoodMusicDAO
                 " AND SubRS." + RENT_SYS_START_RENT_DATE_COL + " IS NOT NULL AND SubRS." + RENT_SYS_END_RENT_DATE_COL + " IS NULL )"
         );
 
-        findInstrumentIfAvailableByIdLockingForUpdateStmt = connection.prepareStatement(
+        findAvailableInstrumentByIdLockingForUpdateStmt = connection.prepareStatement(
 
                 "SELECT I." + INST_PK_COL + ", Inv." + INV_NO_OF_INST + " FROM " +INST_TBL + " AS I JOIN " + INV_TBL +
                 " AS Inv ON I." + INST_FK_INV_COL + " = Inv." + INV_PK_COL + " JOIN " +RENT_SYS_TBL + " AS RS ON I." +
