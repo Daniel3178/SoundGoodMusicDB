@@ -460,8 +460,7 @@ public class SoundGoodMusicDAO
 
         findAvailableInstrumentByIdStmt = connection.prepareStatement(
                 "SELECT I." + INST_PK_COL + ", Inv." + INV_NO_OF_INST + " FROM " +INST_TBL + " AS I JOIN " + INV_TBL +
-                " AS Inv ON I." + INST_FK_INV_COL + " = Inv." + INV_PK_COL + " JOIN " + RENT_SYS_TBL + " AS RS ON I." +
-                INST_PK_COL + " = RS." + RENT_SYS_FK_INST_COL + " WHERE I." + INST_PK_COL + " = ? AND NOT EXISTS ( " +
+                " AS Inv ON I." + INST_FK_INV_COL + " = Inv." + INV_PK_COL + " WHERE I." + INST_PK_COL + " = ? AND NOT EXISTS ( " +
                 "SELECT 1 FROM " + RENT_SYS_TBL + " AS SubRS WHERE SubRS." + RENT_SYS_FK_INST_COL + " = I." + INST_PK_COL +
                 " AND SubRS." + RENT_SYS_START_RENT_DATE_COL + " IS NOT NULL AND SubRS." + RENT_SYS_END_RENT_DATE_COL + " IS NULL )"
         );
@@ -469,8 +468,7 @@ public class SoundGoodMusicDAO
         findAvailableInstrumentByIdLockingForUpdateStmt = connection.prepareStatement(
 
                 "SELECT I." + INST_PK_COL + ", Inv." + INV_NO_OF_INST + " FROM " +INST_TBL + " AS I JOIN " + INV_TBL +
-                " AS Inv ON I." + INST_FK_INV_COL + " = Inv." + INV_PK_COL + " JOIN " +RENT_SYS_TBL + " AS RS ON I." +
-                INST_PK_COL + " = RS." + RENT_SYS_FK_INST_COL + " WHERE I." + INST_PK_COL + " = ? " + "AND NOT EXISTS ( " +
+                " AS Inv ON I." + INST_FK_INV_COL + " = Inv." + INV_PK_COL + " WHERE I." + INST_PK_COL + " = ? " + "AND NOT EXISTS ( " +
                 "SELECT 1 FROM " + RENT_SYS_TBL + " AS SubRS WHERE SubRS." + RENT_SYS_FK_INST_COL + " = I." + INST_PK_COL +
                 " AND SubRS." + RENT_SYS_START_RENT_DATE_COL + " IS NOT NULL AND SubRS." + RENT_SYS_END_RENT_DATE_COL + " IS NULL " +
                 ") FOR NO KEY UPDATE"
