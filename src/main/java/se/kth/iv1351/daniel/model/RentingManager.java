@@ -35,7 +35,7 @@ public class RentingManager implements RentingDTO
     public RentingManager(RentalInstrument currentInstrument) throws NotExistInDatabaseException
     {
         if (currentInstrument == null) {
-            throw new NotExistInDatabaseException("No such rental record found in database! ");
+            throw new NotExistInDatabaseException("No such on going rental record found in database! ");
         }
         this.currentInstrument = currentInstrument;
         this.currentStudent = null;
@@ -84,8 +84,12 @@ public class RentingManager implements RentingDTO
     }
 
     @Override
-    public int getStudentId()
+    public int getStudentId() throws NullPointerException
     {
+        if (currentStudent == null)
+        {
+            throw new NullPointerException("No record of a student found");
+        }
         return currentStudent.getStudentId();
     }
 

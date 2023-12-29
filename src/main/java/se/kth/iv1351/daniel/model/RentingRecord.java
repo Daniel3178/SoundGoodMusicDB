@@ -29,8 +29,8 @@ public class RentingRecord
     }
 
     public String getStudentSpecificRecord(){
-        return String.format("Student id: %-4d | Name: %-15s, %-15s | Rent id: %-5d | Rented since: %-13s " +
-                             "| Instrument id: %-5d | Type: %-15s | Brand: %-15s | Price: $%-10s | Current number of " +
+        return String.format("SID: %-4d | Name: %-15s, %-15s | RID: %-5d | Rented since: %-13s " +
+                             "| IID: %-5d | TY.: %-15s | BR.: %-15s | PR.: $%-10s | Current number of " +
                              "borrowed Ins : %-2d",
                              currentStudent.getStudentId(),
                              currentStudent.getFirstName(),
@@ -47,8 +47,8 @@ public class RentingRecord
     @Override
     public String toString()
     {
-        return String.format("Student id: %-4d | Name: %-12s, %-12s | Rent id: %-5d | Rented since: %-13s " +
-                             "| Instrument id: %-5d | Type: %-10s | Brand: %-10s | Price: $%-10s",
+        return String.format("SID: %-4d | Name: %-12s, %-12s | RID: %-5d | Rented since: %-13s " +
+                             "| IID: %-5d | TY.: %-10s | BR.: %-10s | PR.: $%-10s",
                              currentStudent.getStudentId(),
                              currentStudent.getFirstName(),
                              currentStudent.getLastName(),

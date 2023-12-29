@@ -2,6 +2,7 @@ package se.kth.iv1351.daniel.controller;
 
 import se.kth.iv1351.daniel.integration.DatabaseException;
 import se.kth.iv1351.daniel.integration.SoundGoodMusicDAO;
+import se.kth.iv1351.daniel.integration.WrongCredentialException;
 import se.kth.iv1351.daniel.model.*;
 
 import java.util.List;
@@ -10,9 +11,9 @@ public class Controller
 {
     private final SoundGoodMusicDAO soundGoodMusicDb;
 
-    public Controller(String password) throws Exception
+    public Controller(String username,String password) throws DatabaseException, WrongCredentialException
     {
-        soundGoodMusicDb = new SoundGoodMusicDAO(password);
+        soundGoodMusicDb = new SoundGoodMusicDAO(username,password);
     }
 
     public RentingDTO terminateRent(int rentId) throws DatabaseException, NotExistInDatabaseException

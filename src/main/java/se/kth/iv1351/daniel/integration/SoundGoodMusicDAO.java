@@ -47,11 +47,11 @@ public class SoundGoodMusicDAO
     private PreparedStatement findRentedInstrumentByRentIdLockingForUpdateStmt;
     private PreparedStatement terminateRentalStmt;
 
-    public SoundGoodMusicDAO(String password) throws DatabaseException
+    public SoundGoodMusicDAO(String username,String password) throws DatabaseException, WrongCredentialException
     {
         try
         {
-            connectToSoundGoodMusicDB(password);
+            connectToSoundGoodMusicDB(username,password);
             prepareStatements();
 
         }
@@ -219,7 +219,7 @@ public class SoundGoodMusicDAO
 
     public void submitRent(RentingDTO renting) throws DatabaseException
     {
-        String failureMsg = "Rental submittion could not be fullfilled";
+        String failureMsg = "Rental submission could not be fulfilled";
 
         try
         {
@@ -249,7 +249,7 @@ public class SoundGoodMusicDAO
 
     public void terminateRent(RentingDTO renting) throws DatabaseException
     {
-        String failureMsg = "Rental termination could not be fullfilled";
+        String failureMsg = "Rental termination could not be fulfilled";
 
         try
         {
@@ -391,11 +391,18 @@ public class SoundGoodMusicDAO
         }
     }
 
-    private void connectToSoundGoodMusicDB(String password) throws SQLException
+    private void connectToSoundGoodMusicDB(String username,String password) throws WrongCredentialException
     {
-        connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/SoundGoodMusic",
-                                                 "postgres", password);
-        connection.setAutoCommit(false);
+        try
+        {
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/SoundGoodMusic",
+                    username, password);
+            connection.setAutoCommit(false);
+        }
+        catch (SQLException e)
+        {
+            throw new WrongCredentialException();
+        }
     }
     private void prepareStatements() throws SQLException
     {
