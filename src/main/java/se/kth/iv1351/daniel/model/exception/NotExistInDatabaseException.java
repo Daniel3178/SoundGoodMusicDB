@@ -1,4 +1,4 @@
-package se.kth.iv1351.daniel.model;
+package se.kth.iv1351.daniel.model.exception;
 
 public class NotExistInDatabaseException extends Exception
 {

@@ -1,5 +1,9 @@
 package se.kth.iv1351.daniel.model;
 
+import se.kth.iv1351.daniel.model.DTO.RentedInstrumentDTO;
+import se.kth.iv1351.daniel.model.DTO.StudentDTO;
+import se.kth.iv1351.daniel.model.exception.NotExistInDatabaseException;
+
 public class RentingRecord
 {
     private final RentedInstrumentDTO currentRentedInstrument;

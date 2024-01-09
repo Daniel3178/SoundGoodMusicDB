@@ -1,5 +1,7 @@
 package se.kth.iv1351.daniel.model;
 
+import se.kth.iv1351.daniel.model.DTO.StudentDTO;
+
 public class Student implements StudentDTO
 {
     private final String firstName;
@@ -22,6 +24,11 @@ public class Student implements StudentDTO
         this.lastName = null;
         this.studentId = studentId;
         this.numberOfBorrowedInstrument = numberOfBorrowedInstrument;
+    }
+
+    public void increaseBorrowedInsByOne()
+    {
+        this.numberOfBorrowedInstrument ++;
     }
 
     @Override
@@ -48,8 +55,4 @@ public class Student implements StudentDTO
         return numberOfBorrowedInstrument;
     }
 
-    public void increaseBorrowedInsByOne()
-    {
-        this.numberOfBorrowedInstrument ++;
-    }
 }

@@ -4,6 +4,10 @@ import se.kth.iv1351.daniel.integration.DatabaseException;
 import se.kth.iv1351.daniel.integration.SoundGoodMusicDAO;
 import se.kth.iv1351.daniel.integration.WrongCredentialException;
 import se.kth.iv1351.daniel.model.*;
+import se.kth.iv1351.daniel.model.DTO.InstrumentDTO;
+import se.kth.iv1351.daniel.model.DTO.RentingDTO;
+import se.kth.iv1351.daniel.model.exception.NotExistInDatabaseException;
+import se.kth.iv1351.daniel.model.exception.RentalLimitException;
 
 import java.util.List;
 
