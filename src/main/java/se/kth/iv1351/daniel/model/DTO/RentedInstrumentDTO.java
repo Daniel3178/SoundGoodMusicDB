@@ -1,4 +1,4 @@
-package se.kth.iv1351.daniel.model.DTO;
+package se.kth.iv1351.daniel.model.dto;
 
 public interface RentedInstrumentDTO extends InstrumentDTO
 {
