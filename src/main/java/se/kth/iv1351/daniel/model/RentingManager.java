@@ -64,7 +64,7 @@ public class RentingManager implements RentingDTO
         currentInstrument.increaseQuantityByOne();
     }
 
-    private String getCurrentDate()
+    private static String getCurrentDate()
     {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
