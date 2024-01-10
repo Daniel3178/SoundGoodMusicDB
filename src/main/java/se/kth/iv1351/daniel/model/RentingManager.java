@@ -3,7 +3,7 @@ package se.kth.iv1351.daniel.model;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import se.kth.iv1351.daniel.model.dto.RentingDTO;
+import se.kth.iv1351.daniel.model.DTO.RentingDTO;
 import se.kth.iv1351.daniel.model.exception.NotExistInDatabaseException;
 import se.kth.iv1351.daniel.model.exception.RentalLimitException;
 

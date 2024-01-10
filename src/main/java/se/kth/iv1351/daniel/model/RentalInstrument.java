@@ -1,6 +1,6 @@
 package se.kth.iv1351.daniel.model;
 
-import se.kth.iv1351.daniel.model.dto.RentedInstrumentDTO;
+import se.kth.iv1351.daniel.model.DTO.RentedInstrumentDTO;
 
 public class RentalInstrument implements RentedInstrumentDTO
 {

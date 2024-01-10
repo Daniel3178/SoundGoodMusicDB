@@ -1,6 +1,6 @@
 package se.kth.iv1351.daniel.model;
 
-import se.kth.iv1351.daniel.model.dto.StudentDTO;
+import se.kth.iv1351.daniel.model.DTO.StudentDTO;
 
 public class Student implements StudentDTO
 {

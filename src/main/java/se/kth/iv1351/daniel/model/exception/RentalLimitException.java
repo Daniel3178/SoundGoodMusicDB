@@ -1,6 +1,6 @@
 package se.kth.iv1351.daniel.model.exception;
 
-import se.kth.iv1351.daniel.model.dto.StudentDTO;
+import se.kth.iv1351.daniel.model.DTO.StudentDTO;
 
 public class RentalLimitException extends Exception
 {
