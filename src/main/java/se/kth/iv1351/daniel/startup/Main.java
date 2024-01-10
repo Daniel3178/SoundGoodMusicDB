@@ -20,7 +20,8 @@ public class Main
                 String username = getUsername(scanner);
                 System.out.print("Enter your password to database: ");
                 String password = getPassword(scanner);
-                new BlockingInterpreter(new Controller(username, password)).handleCmds();
+              //  new BlockingInterpreter(new Controller(username, password)).handleCmds();
+                BlockingInterpreter.getInstance(Controller.getInstance(username,password)).handleCmds();
                 break;
             }
             catch (DatabaseException e)

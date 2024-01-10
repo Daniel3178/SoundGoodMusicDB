@@ -16,13 +16,22 @@ import se.kth.iv1351.daniel.model.exception.RentalLimitException;
 
 public class Controller
 {
+    private static Controller ctrl = null;
     private final SoundGoodMusicDAO soundGoodMusicDb;
 
-    public Controller(String username, String password) throws DatabaseException, WrongCredentialException
+    private Controller(String username, String password) throws DatabaseException, WrongCredentialException
     {
         soundGoodMusicDb = new SoundGoodMusicDAO(username, password);
     }
 
+    public static Controller getInstance(String username, String password) throws DatabaseException, WrongCredentialException
+    {
+        if (ctrl == null)
+        {
+            ctrl = new Controller(username, password);
+        }
+        return ctrl;
+    }
     public RentingDTO terminateRent(int rentId) throws DatabaseException, NotExistInDatabaseException
     {
         String failureMsg = "Unable to terminate rent";

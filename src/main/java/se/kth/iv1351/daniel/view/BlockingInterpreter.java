@@ -16,11 +16,21 @@ public class BlockingInterpreter
     private static final String PROMPT = "> ";
     private final Scanner console;
     private final Controller ctrl;
+    private static BlockingInterpreter blockingInterpreter = null;
 
-    public BlockingInterpreter(Controller ctrl)
+    private BlockingInterpreter(Controller ctrl)
     {
         this.console = new Scanner(System.in);
         this.ctrl = ctrl;
+    }
+
+    public static BlockingInterpreter getInstance(Controller ctrl)
+    {
+        if (blockingInterpreter == null)
+        {
+            blockingInterpreter = new BlockingInterpreter(ctrl);
+        }
+        return blockingInterpreter;
     }
 
     public void handleCmds()
@@ -204,7 +214,7 @@ public class BlockingInterpreter
         }
     }
 
-    private static String capitaliseFirstLetter(String name)
+    private String capitaliseFirstLetter(String name)
     {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
