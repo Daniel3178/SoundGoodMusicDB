@@ -1,7 +1,7 @@
 package se.kth.iv1351.daniel.view;
 
 import se.kth.iv1351.daniel.controller.Controller;
-import se.kth.iv1351.daniel.integration.DatabaseException;
+import se.kth.iv1351.daniel.integration.exception.DatabaseException;
 import se.kth.iv1351.daniel.model.*;
 import se.kth.iv1351.daniel.model.dto.InstrumentDTO;
 import se.kth.iv1351.daniel.model.dto.RentingDTO;

@@ -1,4 +1,4 @@
-package se.kth.iv1351.daniel.integration;
+package se.kth.iv1351.daniel.integration.exception;
 
 public class WrongCredentialException extends Exception
 {

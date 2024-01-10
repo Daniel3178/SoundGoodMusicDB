@@ -1,8 +1,8 @@
 package se.kth.iv1351.daniel.startup;
 
 import se.kth.iv1351.daniel.controller.Controller;
-import se.kth.iv1351.daniel.integration.DatabaseException;
-import se.kth.iv1351.daniel.integration.WrongCredentialException;
+import se.kth.iv1351.daniel.integration.exception.DatabaseException;
+import se.kth.iv1351.daniel.integration.exception.WrongCredentialException;
 import se.kth.iv1351.daniel.view.BlockingInterpreter;
 
 import java.util.Scanner;

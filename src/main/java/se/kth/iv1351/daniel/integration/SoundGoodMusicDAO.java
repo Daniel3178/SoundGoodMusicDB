@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.kth.iv1351.daniel.integration.exception.DatabaseException;
+import se.kth.iv1351.daniel.integration.exception.WrongCredentialException;
 import se.kth.iv1351.daniel.model.RentalInstrument;
 import se.kth.iv1351.daniel.model.RentingRecord;
 import se.kth.iv1351.daniel.model.Student;
