@@ -1,4 +1,5 @@
 package se.kth.iv1351.daniel.model;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -37,7 +38,8 @@ public class RentingManager implements RentingDTO
 
     public RentingManager(RentalInstrument currentInstrument) throws NotExistInDatabaseException
     {
-        if (currentInstrument == null) {
+        if (currentInstrument == null)
+        {
             throw new NotExistInDatabaseException("No such on going rental record found in database! ");
         }
         this.currentInstrument = currentInstrument;
@@ -46,7 +48,8 @@ public class RentingManager implements RentingDTO
 
     public void rent() throws RentalLimitException, NullPointerException
     {
-        if (currentStudent == null) {
+        if (currentStudent == null)
+        {
             throw new NullPointerException("No record of a student");
         }
         if (currentStudent.getNumberOfBorrowedInstrument() >= 2)
@@ -113,10 +116,12 @@ public class RentingManager implements RentingDTO
     {
         return currentInstrument.getRentId();
     }
+
     @Override
     public int getStudentCurrNoOfBorrowedIns() throws NullPointerException
     {
-        if (currentStudent == null) {
+        if (currentStudent == null)
+        {
             throw new NullPointerException("No record of a student");
         }
         return currentStudent.getNumberOfBorrowedInstrument();

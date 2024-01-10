@@ -49,7 +49,7 @@ public class CmdLine
 
     private void parseCmd(String enteredLine)
     {
-        int cmdNameIndex =0;
+        int cmdNameIndex = 0;
         try
         {
             String trimmed = removeExtraSpaces(enteredLine);

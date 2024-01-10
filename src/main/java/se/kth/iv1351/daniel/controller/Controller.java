@@ -15,9 +15,9 @@ public class Controller
 {
     private final SoundGoodMusicDAO soundGoodMusicDb;
 
-    public Controller(String username,String password) throws DatabaseException, WrongCredentialException
+    public Controller(String username, String password) throws DatabaseException, WrongCredentialException
     {
-        soundGoodMusicDb = new SoundGoodMusicDAO(username,password);
+        soundGoodMusicDb = new SoundGoodMusicDAO(username, password);
     }
 
     public RentingDTO terminateRent(int rentId) throws DatabaseException, NotExistInDatabaseException
@@ -37,10 +37,13 @@ public class Controller
             throw new DatabaseException("Unable to terminate");
         }
     }
+
     public RentingDTO rent(int instrumentId, int studentId) throws DatabaseException, NotExistInDatabaseException,
-            RentalLimitException{
+            RentalLimitException
+    {
         String failureMsg = "Unable to rent";
-        try{
+        try
+        {
             Student student = soundGoodMusicDb.findStudentBorrowedInstrumentCount(studentId, true);
             RentalInstrument rentalInstrument = soundGoodMusicDb.findInstrumentIfAvailableById(instrumentId, true);
             RentingManager rentingManager = new RentingManager(rentalInstrument, student);
@@ -48,12 +51,15 @@ public class Controller
             soundGoodMusicDb.submitRent(rentingManager);
             return rentingManager;
         }
-        catch (DatabaseException e){
+        catch (DatabaseException e)
+        {
             commitOnGoingTransaction(failureMsg);
             throw new DatabaseException("Unable to rent");
         }
     }
-    public List<? extends InstrumentDTO> getAllAvailableInstruments () throws DatabaseException{
+
+    public List<? extends InstrumentDTO> getAllAvailableInstruments() throws DatabaseException
+    {
         try
         {
             return soundGoodMusicDb.findAllAvailableInstrument();
@@ -64,17 +70,20 @@ public class Controller
         }
     }
 
-    public List<? extends InstrumentDTO> getAvailableInstrumentsByType(String type) throws DatabaseException{
+    public List<? extends InstrumentDTO> getAvailableInstrumentsByType(String type) throws DatabaseException
+    {
         try
         {
             return soundGoodMusicDb.findAvailableInstrumentsByType(type);
         }
-        catch (DatabaseException e) {
+        catch (DatabaseException e)
+        {
             throw new DatabaseException("Unable to list instruments");
         }
     }
 
-    public List<? extends RentingRecord> getAllRentedInstrument() throws DatabaseException, NotExistInDatabaseException{
+    public List<? extends RentingRecord> getAllRentedInstrument() throws DatabaseException, NotExistInDatabaseException
+    {
         try
         {
             return soundGoodMusicDb.findAllRentedInstrument();
@@ -83,13 +92,15 @@ public class Controller
         {
             throw new DatabaseException("Unable to List instruments");
         }
-        catch (NotExistInDatabaseException e) {
+        catch (NotExistInDatabaseException e)
+        {
             throw new NotExistInDatabaseException("No record found");
         }
     }
 
     public List<? extends RentingRecord> getRentedInstrumentByStudentId(int studentId) throws DatabaseException,
-            NotExistInDatabaseException{
+            NotExistInDatabaseException
+    {
         try
         {
             return soundGoodMusicDb.findRentedInstrumentsByStudentId(studentId);
@@ -100,7 +111,8 @@ public class Controller
         }
     }
 
-    private void commitOnGoingTransaction(String failureMsg) throws DatabaseException{
+    private void commitOnGoingTransaction(String failureMsg) throws DatabaseException
+    {
         try
         {
             soundGoodMusicDb.commit();

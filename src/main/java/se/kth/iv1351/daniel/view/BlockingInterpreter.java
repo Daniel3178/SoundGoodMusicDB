@@ -49,17 +49,17 @@ public class BlockingInterpreter
                             for (InstrumentDTO instrument : instruments)
                             {
                                 System.out.printf("Instrument id: %-5d | Type: %-15s | Brand: %-15s | Price: $%-10s%n",
-                                                  instrument.getInstrumentId(),
-                                                  instrument.getModel(),
-                                                  instrument.getBrand(),
-                                                  instrument.getPrice()
+                                        instrument.getInstrumentId(),
+                                        instrument.getModel(),
+                                        instrument.getBrand(),
+                                        instrument.getPrice()
                                 );
                             }
                         }
                         catch (DatabaseException e)
                         {
                             System.out.println("Ops! There has been an issue with connecting to database, pls try " +
-                                               "again");
+                                    "again");
                         }
                         break;
                     }
@@ -68,14 +68,14 @@ public class BlockingInterpreter
                         try
                         {
                             RentingDTO rentingInfo = ctrl.rent(Integer.parseInt(cmdLine.getParameter(0)),
-                                      Integer.parseInt(cmdLine.getParameter(1)));
+                                    Integer.parseInt(cmdLine.getParameter(1)));
                             System.out.printf("Renting successful! A new rental record for the student with ID: " +
-                                              "%-3d, " +
-                                              "has been officially submitted as of %-12s. " +
-                                              "The student has now rented a total of %d instruments.\n",
-                                              rentingInfo.getStudentId(),
-                                              rentingInfo.getStartDate(),
-                                              rentingInfo.getStudentCurrNoOfBorrowedIns()
+                                            "%-3d, " +
+                                            "has been officially submitted as of %-12s. " +
+                                            "The student has now rented a total of %d instruments.\n",
+                                    rentingInfo.getStudentId(),
+                                    rentingInfo.getStartDate(),
+                                    rentingInfo.getStudentCurrNoOfBorrowedIns()
                             );
                         }
                         catch (NumberFormatException e)
@@ -85,7 +85,7 @@ public class BlockingInterpreter
                         catch (DatabaseException dbException)
                         {
                             System.out.println("Ops! There has been an issue with connecting to database, pls try " +
-                                               "again");
+                                    "again");
                         }
                         catch (RentalLimitException | NotExistInDatabaseException rentalException)
                         {
@@ -120,7 +120,7 @@ public class BlockingInterpreter
                         catch (DatabaseException dbExc)
                         {
                             System.out.println("Ops! There has been an issue with connecting to database, pls try " +
-                                               "again");
+                                    "again");
                         }
                         catch (NotExistInDatabaseException notExistInDatabaseException)
                         {
@@ -134,9 +134,9 @@ public class BlockingInterpreter
                         {
                             RentingDTO rentingInfo = ctrl.terminateRent(Integer.parseInt(cmdLine.getParameter(0)));
                             System.out.printf("The rental record with ID: %-3d" +
-                                              "has been officially terminated as of %-12s.\n",
-                                              rentingInfo.getRentId(),
-                                              rentingInfo.getEndDate()
+                                            "has been officially terminated as of %-12s.\n",
+                                    rentingInfo.getRentId(),
+                                    rentingInfo.getEndDate()
                             );
                         }
                         catch (NumberFormatException e)

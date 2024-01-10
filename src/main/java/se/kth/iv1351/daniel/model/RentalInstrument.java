@@ -2,7 +2,8 @@ package se.kth.iv1351.daniel.model;
 
 import se.kth.iv1351.daniel.model.dto.RentedInstrumentDTO;
 
-public class RentalInstrument implements RentedInstrumentDTO {
+public class RentalInstrument implements RentedInstrumentDTO
+{
 
     private final int rentId;
     private final int instrumentId;
@@ -13,7 +14,8 @@ public class RentalInstrument implements RentedInstrumentDTO {
     private int quantity;
     private final float price;
 
-    public static class Builder {
+    public static class Builder
+    {
 
         private int rentId;
         private int instrumentId;
@@ -24,7 +26,8 @@ public class RentalInstrument implements RentedInstrumentDTO {
         private int quantity;
         private float price;
 
-        public Builder() {
+        public Builder()
+        {
             this.rentId = -1;
             this.instrumentId = -1;
             this.model = null;
@@ -35,52 +38,62 @@ public class RentalInstrument implements RentedInstrumentDTO {
             this.price = -1;
         }
 
-        public Builder setRentId(int rentId) {
+        public Builder setRentId(int rentId)
+        {
             this.rentId = rentId;
             return this;
         }
 
-        public Builder setInstrumentId(int instrumentId) {
+        public Builder setInstrumentId(int instrumentId)
+        {
             this.instrumentId = instrumentId;
             return this;
         }
 
-        public Builder setModel(String model) {
+        public Builder setModel(String model)
+        {
             this.model = model;
             return this;
         }
 
-        public Builder setBrand(String brand) {
+        public Builder setBrand(String brand)
+        {
             this.brand = brand;
             return this;
         }
 
-        public Builder setStartRentingDate(String startRentingDate) {
+        public Builder setStartRentingDate(String startRentingDate)
+        {
             this.startRentingDate = startRentingDate;
             return this;
         }
 
-        public Builder setEndRentingDate(String endRentingDate) {
+        public Builder setEndRentingDate(String endRentingDate)
+        {
             this.endRentingDate = endRentingDate;
             return this;
         }
 
-        public Builder setQuantity(int quantity) {
+        public Builder setQuantity(int quantity)
+        {
             this.quantity = quantity;
             return this;
         }
 
-        public Builder setPrice(float price) {
+        public Builder setPrice(float price)
+        {
             this.price = price;
             return this;
         }
 
-        public RentalInstrument build() {
+        public RentalInstrument build()
+        {
             return new RentalInstrument(this);
         }
     }
 
-    public RentalInstrument(Builder builder) {
+    public RentalInstrument(Builder builder)
+    {
         this.rentId = builder.rentId;
         this.instrumentId = builder.instrumentId;
         this.model = builder.model;
@@ -91,57 +104,69 @@ public class RentalInstrument implements RentedInstrumentDTO {
         this.price = builder.price;
     }
 
-    public void setStartRentingDate(String start_renting_date) {
+    public void setStartRentingDate(String start_renting_date)
+    {
         this.startRentingDate = start_renting_date;
     }
 
-    public String getEndRentingDate() {
+    public String getEndRentingDate()
+    {
         return endRentingDate;
     }
 
-    public void setEndRentingDate(String end_renting_date) {
+    public void setEndRentingDate(String end_renting_date)
+    {
         this.endRentingDate = end_renting_date;
     }
 
-    public int getQuantity() {
+    public int getQuantity()
+    {
         return quantity;
     }
 
-    public void increaseQuantityByOne() {
+    public void increaseQuantityByOne()
+    {
         this.quantity++;
     }
 
-    public void decreaseQuantityByOne() {
+    public void decreaseQuantityByOne()
+    {
         this.quantity--;
     }
 
     @Override
-    public int getRentId() {
+    public int getRentId()
+    {
         return rentId;
     }
 
     @Override
-    public String getStartRentingDate() {
+    public String getStartRentingDate()
+    {
         return startRentingDate;
     }
 
     @Override
-    public int getInstrumentId() {
+    public int getInstrumentId()
+    {
         return instrumentId;
     }
 
     @Override
-    public String getModel() {
+    public String getModel()
+    {
         return model;
     }
 
     @Override
-    public String getBrand() {
+    public String getBrand()
+    {
         return brand;
     }
 
     @Override
-    public float getPrice() {
+    public float getPrice()
+    {
         return price;
     }
 

@@ -32,36 +32,38 @@ public class RentingRecord
         this.currentStudent = currentStudent;
     }
 
-    public String getStudentSpecificRecord(){
+    public String getStudentSpecificRecord()
+    {
         return String.format("SID: %-4d | Name: %-15s, %-15s | RID: %-5d | Rented since: %-13s " +
-                             "| IID: %-5d | TY.: %-15s | BR.: %-15s | PR.: $%-10s | Current number of " +
-                             "borrowed Ins : %-2d",
-                             currentStudent.getStudentId(),
-                             currentStudent.getFirstName(),
-                             currentStudent.getLastName(),
-                             currentRentedInstrument.getRentId(),
-                             currentRentedInstrument.getStartRentingDate(),
-                             currentRentedInstrument.getInstrumentId(),
-                             currentRentedInstrument.getModel(),
-                             currentRentedInstrument.getBrand(),
-                             currentRentedInstrument.getPrice(),
-                             currentStudent.getNumberOfBorrowedInstrument()
+                        "| IID: %-5d | TY.: %-15s | BR.: %-15s | PR.: $%-10s | Current number of " +
+                        "borrowed Ins : %-2d",
+                currentStudent.getStudentId(),
+                currentStudent.getFirstName(),
+                currentStudent.getLastName(),
+                currentRentedInstrument.getRentId(),
+                currentRentedInstrument.getStartRentingDate(),
+                currentRentedInstrument.getInstrumentId(),
+                currentRentedInstrument.getModel(),
+                currentRentedInstrument.getBrand(),
+                currentRentedInstrument.getPrice(),
+                currentStudent.getNumberOfBorrowedInstrument()
         );
     }
+
     @Override
     public String toString()
     {
         return String.format("SID: %-4d | Name: %-12s, %-12s | RID: %-5d | Rented since: %-13s " +
-                             "| IID: %-5d | TY.: %-10s | BR.: %-10s | PR.: $%-10s",
-                             currentStudent.getStudentId(),
-                             currentStudent.getFirstName(),
-                             currentStudent.getLastName(),
-                             currentRentedInstrument.getRentId(),
-                             currentRentedInstrument.getStartRentingDate(),
-                             currentRentedInstrument.getInstrumentId(),
-                             currentRentedInstrument.getModel(),
-                             currentRentedInstrument.getBrand(),
-                             currentRentedInstrument.getPrice()
+                        "| IID: %-5d | TY.: %-10s | BR.: %-10s | PR.: $%-10s",
+                currentStudent.getStudentId(),
+                currentStudent.getFirstName(),
+                currentStudent.getLastName(),
+                currentRentedInstrument.getRentId(),
+                currentRentedInstrument.getStartRentingDate(),
+                currentRentedInstrument.getInstrumentId(),
+                currentRentedInstrument.getModel(),
+                currentRentedInstrument.getBrand(),
+                currentRentedInstrument.getPrice()
         );
 
     }
