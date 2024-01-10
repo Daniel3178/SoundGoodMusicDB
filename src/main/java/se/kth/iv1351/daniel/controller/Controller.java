@@ -1,15 +1,18 @@
 package se.kth.iv1351.daniel.controller;
 
+import java.util.List;
+
 import se.kth.iv1351.daniel.integration.SoundGoodMusicDAO;
 import se.kth.iv1351.daniel.integration.exception.DatabaseException;
 import se.kth.iv1351.daniel.integration.exception.WrongCredentialException;
-import se.kth.iv1351.daniel.model.*;
+import se.kth.iv1351.daniel.model.RentalInstrument;
+import se.kth.iv1351.daniel.model.RentingManager;
+import se.kth.iv1351.daniel.model.RentingRecord;
+import se.kth.iv1351.daniel.model.Student;
 import se.kth.iv1351.daniel.model.dto.InstrumentDTO;
 import se.kth.iv1351.daniel.model.dto.RentingDTO;
 import se.kth.iv1351.daniel.model.exception.NotExistInDatabaseException;
 import se.kth.iv1351.daniel.model.exception.RentalLimitException;
-
-import java.util.List;
 
 public class Controller
 {
