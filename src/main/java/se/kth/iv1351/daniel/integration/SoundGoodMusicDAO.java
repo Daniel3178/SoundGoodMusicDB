@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.kth.iv1351.daniel.model.RentalInstrument;
-import se.kth.iv1351.daniel.model.RentalInstrumentBuilder;
 import se.kth.iv1351.daniel.model.RentingRecord;
 import se.kth.iv1351.daniel.model.Student;
 import se.kth.iv1351.daniel.model.dto.RentingDTO;
@@ -71,12 +70,12 @@ public class SoundGoodMusicDAO {
         List<RentalInstrument> instruments = new ArrayList<>();
         try (ResultSet result = findAllAvailableInstrumentStmt.executeQuery()) {
             while (result.next()) {
-                instruments.add(new RentalInstrumentBuilder()
+                instruments.add(new RentalInstrument.Builder()
                         .setInstrumentId(result.getInt(INST_PK_COL))
                         .setModel(result.getString(INV_MDL_TBL))
                         .setBrand(result.getString(INV_BRD_TBL))
                         .setPrice(result.getFloat(INV_MO_PR))
-                        .buildRentalInstrument());
+                        .build());
             }
             connection.commit();
         } catch (SQLException e) {
@@ -93,12 +92,12 @@ public class SoundGoodMusicDAO {
             findAvailableInstrumentsByTypeStmt.setString(1, "%" + type + "%");
             result = findAvailableInstrumentsByTypeStmt.executeQuery();
             while (result.next()) {
-                instruments.add(new RentalInstrumentBuilder()
+                instruments.add(new RentalInstrument.Builder()
                         .setInstrumentId(result.getInt(INST_PK_COL))
                         .setModel(result.getString(INV_MDL_TBL))
                         .setBrand(result.getString(INV_BRD_TBL))
                         .setPrice(result.getFloat(INV_MO_PR))
-                        .buildRentalInstrument());
+                        .build());
             }
             connection.commit();
         } catch (SQLException e) {
@@ -117,19 +116,21 @@ public class SoundGoodMusicDAO {
         try (ResultSet result = findAllRentedInstrumentStmt.executeQuery()) {
             while (result.next()) {
 
-                rentalInstrument = new RentalInstrumentBuilder()
+                rentalInstrument = new RentalInstrument.Builder()
                         .setRentId(result.getInt(RENT_SYS_PK_COL))
                         .setInstrumentId(result.getInt(INST_PK_COL))
                         .setModel(result.getString(INV_MDL_TBL))
                         .setBrand(result.getString(INV_BRD_TBL))
                         .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
                         .setPrice(result.getFloat(INV_MO_PR))
-                        .buildRentalInstrument();
+                        .build();
 
-                student = new Student(result.getString(PER_FST_N_COL),
-                        result.getString(PER_LST_N_COL),
-                        result.getInt(STU_PK_COL),
-                        result.getInt(DER_NO_OF_BD_INST_COL));
+                student = new Student.Builder()
+                        .setFirstName(result.getString(PER_FST_N_COL))
+                        .setLastName(result.getString(PER_LST_N_COL))
+                        .setStudentId(result.getInt(STU_PK_COL))
+                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
+                        .build();
 
                 rentingRecords.add(new RentingRecord(rentalInstrument, student));
             }
@@ -144,7 +145,7 @@ public class SoundGoodMusicDAO {
             NotExistInDatabaseException {
         String failureMsg = "Could not list instruments";
         List<RentingRecord> rentingRecords = new ArrayList<>();
-        RentalInstrument rentalInstrument;
+        RentalInstrument rentedInstrument;
         Student student;
         ResultSet result = null;
         try {
@@ -152,21 +153,23 @@ public class SoundGoodMusicDAO {
             result = findRentedInstrumentsByStudentIdStmt.executeQuery();
             while (result.next()) {
 
-                rentalInstrument = new RentalInstrumentBuilder()
+                rentedInstrument = new RentalInstrument.Builder()
                         .setRentId(result.getInt(RENT_SYS_PK_COL))
                         .setInstrumentId(result.getInt(INST_PK_COL))
                         .setModel(result.getString(INV_MDL_TBL))
                         .setBrand(result.getString(INV_BRD_TBL))
                         .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
                         .setPrice(result.getFloat(INV_MO_PR))
-                        .buildRentalInstrument();
+                        .build();
 
-                student = new Student(result.getString(PER_FST_N_COL),
-                        result.getString(PER_LST_N_COL),
-                        result.getInt(STU_PK_COL),
-                        result.getInt(DER_NO_OF_BD_INST_COL));
+                student = new Student.Builder()
+                        .setFirstName(result.getString(PER_FST_N_COL))
+                        .setLastName(result.getString(PER_LST_N_COL))
+                        .setStudentId(result.getInt(STU_PK_COL))
+                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
+                        .build();
 
-                rentingRecords.add(new RentingRecord(rentalInstrument, student));
+                rentingRecords.add(new RentingRecord(rentedInstrument, student));
             }
             connection.commit();
         } catch (SQLException e) {
@@ -190,11 +193,11 @@ public class SoundGoodMusicDAO {
             stmtToExecute.setInt(1, rentId);
             result = stmtToExecute.executeQuery();
             if (result.next()) {
-                rentedInstrument = new RentalInstrumentBuilder()
+                rentedInstrument = new RentalInstrument.Builder()
                         .setRentId(result.getInt(RENT_SYS_PK_COL))
                         .setInstrumentId(result.getInt(INST_PK_COL))
                         .setQuantity(result.getInt(INV_NO_OF_INST))
-                        .buildRentalInstrument();
+                        .build();
             }
             if (!lockingExclusive) {
                 connection.commit();
@@ -259,15 +262,15 @@ public class SoundGoodMusicDAO {
         PreparedStatement stmtToExecute = lockingExclusive ? findAvailableInstrumentByIdLockingForUpdateStmt
                 : findAvailableInstrumentByIdStmt;
         ResultSet result = null;
-        RentalInstrument rentalInstrument = null;
+        RentalInstrument rentedInstrument = null;
         try {
             stmtToExecute.setInt(1, instrumentId);
             result = stmtToExecute.executeQuery();
             if (result.next()) {
-                rentalInstrument = new RentalInstrumentBuilder()
+                rentedInstrument = new RentalInstrument.Builder()
                         .setInstrumentId(result.getInt(INST_PK_COL))
                         .setQuantity(result.getInt(INV_NO_OF_INST))
-                        .buildRentalInstrument();
+                        .build();
             }
             if (!lockingExclusive) {
                 connection.commit();
@@ -278,7 +281,7 @@ public class SoundGoodMusicDAO {
         } finally {
             closeResultSet(failureMsg, result);
         }
-        return rentalInstrument;
+        return rentedInstrument;
     }
 
     public Student findStudentBorrowedInstrumentCount(int studentId, boolean lockExclusive) throws DatabaseException {
@@ -292,9 +295,10 @@ public class SoundGoodMusicDAO {
             stmtToExecute.setInt(1, studentId);
             result = stmtToExecute.executeQuery();
             if (result.next()) {
-                student = new Student(
-                        result.getInt(STU_PK_COL),
-                        result.getInt(DER_NO_OF_BD_INST_COL));
+                student = new Student.Builder()
+                        .setStudentId(result.getInt(STU_PK_COL))
+                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
+                        .build();
             }
             if (!lockExclusive) {
                 connection.commit();
