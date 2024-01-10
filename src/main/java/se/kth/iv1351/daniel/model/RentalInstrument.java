@@ -104,9 +104,9 @@ public class RentalInstrument implements RentedInstrumentDTO
         this.price = builder.price;
     }
 
-    public void setStartRentingDate(String start_renting_date)
+    public void setStartRentingDate(String startRentingDate)
     {
-        this.startRentingDate = start_renting_date;
+        this.startRentingDate = startRentingDate;
     }
 
     public String getEndRentingDate()
@@ -114,9 +114,9 @@ public class RentalInstrument implements RentedInstrumentDTO
         return endRentingDate;
     }
 
-    public void setEndRentingDate(String end_renting_date)
+    public void setEndRentingDate(String endRentingDate)
     {
-        this.endRentingDate = end_renting_date;
+        this.endRentingDate = endRentingDate;
     }
 
     public int getQuantity()
