@@ -6,8 +6,8 @@ import java.util.Scanner;
 import se.kth.iv1351.daniel.controller.Controller;
 import se.kth.iv1351.daniel.integration.exception.DatabaseException;
 import se.kth.iv1351.daniel.model.RentingRecord;
-import se.kth.iv1351.daniel.model.DTO.InstrumentDTO;
-import se.kth.iv1351.daniel.model.DTO.RentingDTO;
+import se.kth.iv1351.daniel.model.dto1.InstrumentDTO;
+import se.kth.iv1351.daniel.model.dto1.RentingDTO;
 import se.kth.iv1351.daniel.model.exception.NotExistInDatabaseException;
 import se.kth.iv1351.daniel.model.exception.RentalLimitException;
 
