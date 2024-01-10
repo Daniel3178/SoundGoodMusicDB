@@ -43,32 +43,19 @@ public class BlockingInterpreter
                 CmdLine cmdLine = new CmdLine(readNextLine());
                 switch (cmdLine.getCmd())
                 {
-                    case LIST_A_I:
-                        handleListAvaInst(cmdLine);
-                        break;
+                    case LIST_A_I -> handleListAvaInst(cmdLine);
 
-                    case RENT:
-                        handleRent(cmdLine);
-                        break;
+                    case RENT -> handleRent(cmdLine);
 
-                    case LIST_R_I:
-                        handleListRentInst(cmdLine);
-                        break;
+                    case LIST_R_I -> handleListRentInst(cmdLine);
 
-                    case TERMINATE_RENT:
-                        handleTerminateRental(cmdLine);
-                        break;
+                    case TERMINATE_RENT -> handleTerminateRental(cmdLine);
 
-                    case QUIT:
-                        keepReceivingCmds = false;
-                        break;
+                    case QUIT -> keepReceivingCmds = false;
 
-                    case HELP:
-                        handleHelp();
-                        break;
+                    case HELP -> handleHelp();
 
-                    default:
-                        System.out.println("Illegal command");
+                    default -> System.out.println("Illegal command");
                 }
             }
             catch (Exception e)

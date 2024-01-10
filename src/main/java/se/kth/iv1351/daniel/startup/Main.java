@@ -1,11 +1,11 @@
 package se.kth.iv1351.daniel.startup;
 
+import java.util.Scanner;
+
 import se.kth.iv1351.daniel.controller.Controller;
 import se.kth.iv1351.daniel.integration.exception.DatabaseException;
 import se.kth.iv1351.daniel.integration.exception.WrongCredentialException;
 import se.kth.iv1351.daniel.view.BlockingInterpreter;
-
-import java.util.Scanner;
 
 public class Main
 {
@@ -20,7 +20,6 @@ public class Main
                 String username = getUsername(scanner);
                 System.out.print("Enter your password to database: ");
                 String password = getPassword(scanner);
-              //  new BlockingInterpreter(new Controller(username, password)).handleCmds();
                 BlockingInterpreter.getInstance(Controller.getInstance(username,password)).handleCmds();
                 break;
             }
