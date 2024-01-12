@@ -1,5 +1,4 @@
 package se.kth.iv1351.daniel.startup;
-
 import java.util.Scanner;
 
 import se.kth.iv1351.daniel.controller.Controller;
@@ -9,6 +8,7 @@ import se.kth.iv1351.daniel.view.BlockingInterpreter;
 
 public class Main
 {
+
     public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
