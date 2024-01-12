@@ -80,12 +80,7 @@ public class SoundGoodMusicDAO
         {
             while (result.next())
             {
-                instruments.add(new RentalInstrument.Builder()
-                                        .setInstrumentId(result.getInt(INST_PK_COL))
-                                        .setModel(result.getString(INV_MDL_TBL))
-                                        .setBrand(result.getString(INV_BRD_TBL))
-                                        .setPrice(result.getFloat(INV_MO_PR))
-                                        .build());
+                instruments.add(fetchAvaInst(result));
             }
             connection.commit();
         }
@@ -107,12 +102,7 @@ public class SoundGoodMusicDAO
             result = findAvailableInstrumentsByTypeStmt.executeQuery();
             while (result.next())
             {
-                instruments.add(new RentalInstrument.Builder()
-                                        .setInstrumentId(result.getInt(INST_PK_COL))
-                                        .setModel(result.getString(INV_MDL_TBL))
-                                        .setBrand(result.getString(INV_BRD_TBL))
-                                        .setPrice(result.getFloat(INV_MO_PR))
-                                        .build());
+                instruments.add(fetchAvaInst(result));
             }
             connection.commit();
         }
@@ -131,30 +121,11 @@ public class SoundGoodMusicDAO
     {
         String failureMsg = "Could not list instruments";
         List<RentingRecord> rentingRecords = new ArrayList<>();
-        RentalInstrument rentalInstrument;
-        Student student;
         try (ResultSet result = findAllRentedInstrumentStmt.executeQuery())
         {
             while (result.next())
             {
-
-                rentalInstrument = new RentalInstrument.Builder()
-                        .setRentId(result.getInt(RENT_SYS_PK_COL))
-                        .setInstrumentId(result.getInt(INST_PK_COL))
-                        .setModel(result.getString(INV_MDL_TBL))
-                        .setBrand(result.getString(INV_BRD_TBL))
-                        .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
-                        .setPrice(result.getFloat(INV_MO_PR))
-                        .build();
-
-                student = new Student.Builder()
-                        .setFirstName(result.getString(PER_FST_N_COL))
-                        .setLastName(result.getString(PER_LST_N_COL))
-                        .setStudentId(result.getInt(STU_PK_COL))
-                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
-                        .build();
-
-                rentingRecords.add(new RentingRecord(rentalInstrument, student));
+                rentingRecords.add(fetchRentingRecord(result));
             }
             connection.commit();
         }
@@ -165,31 +136,35 @@ public class SoundGoodMusicDAO
         return rentingRecords;
     }
 
-    private RentingRecord fetchNextRentingRecord(ResultSet result, String failureMsg) throws DatabaseException {
-        try {
-            if (result.next()) {
-                RentalInstrument rentalInstrument = new RentalInstrument.Builder()
-                        .setRentId(result.getInt(RENT_SYS_PK_COL))
-                        .setInstrumentId(result.getInt(INST_PK_COL))
-                        .setModel(result.getString(INV_MDL_TBL))
-                        .setBrand(result.getString(INV_BRD_TBL))
-                        .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
-                        .setPrice(result.getFloat(INV_MO_PR))
-                        .build();
+    private RentingRecord fetchRentingRecord(ResultSet result) throws SQLException
+    {
+        RentalInstrument rentalInstrument = new RentalInstrument.Builder()
+                .setRentId(result.getInt(RENT_SYS_PK_COL))
+                .setInstrumentId(result.getInt(INST_PK_COL))
+                .setModel(result.getString(INV_MDL_TBL))
+                .setBrand(result.getString(INV_BRD_TBL))
+                .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
+                .setPrice(result.getFloat(INV_MO_PR))
+                .build();
 
-                Student student = new Student.Builder()
-                        .setFirstName(result.getString(PER_FST_N_COL))
-                        .setLastName(result.getString(PER_LST_N_COL))
-                        .setStudentId(result.getInt(STU_PK_COL))
-                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
-                        .build();
+        Student student = new Student.Builder()
+                .setFirstName(result.getString(PER_FST_N_COL))
+                .setLastName(result.getString(PER_LST_N_COL))
+                .setStudentId(result.getInt(STU_PK_COL))
+                .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
+                .build();
 
-                return new RentingRecord(rentalInstrument, student);
-            }
-        } catch (SQLException e) {
-            handleException(failureMsg);
-        }
-        return null;
+        return new RentingRecord(rentalInstrument, student);
+    }
+
+    private RentalInstrument fetchAvaInst(ResultSet result) throws SQLException
+    {
+        return new RentalInstrument.Builder()
+                .setInstrumentId(result.getInt(INST_PK_COL))
+                .setModel(result.getString(INV_MDL_TBL))
+                .setBrand(result.getString(INV_BRD_TBL))
+                .setPrice(result.getFloat(INV_MO_PR))
+                .build();
     }
 
     public List<RentingRecord> findRentedInstrumentsByStudentId(int studentId) throws DatabaseException,
@@ -197,8 +172,6 @@ public class SoundGoodMusicDAO
     {
         String failureMsg = "Could not list instruments";
         List<RentingRecord> rentingRecords = new ArrayList<>();
-        RentalInstrument rentedInstrument;
-        Student student;
         ResultSet result = null;
         try
         {
@@ -206,24 +179,7 @@ public class SoundGoodMusicDAO
             result = findRentedInstrumentsByStudentIdStmt.executeQuery();
             while (result.next())
             {
-
-                rentedInstrument = new RentalInstrument.Builder()
-                        .setRentId(result.getInt(RENT_SYS_PK_COL))
-                        .setInstrumentId(result.getInt(INST_PK_COL))
-                        .setModel(result.getString(INV_MDL_TBL))
-                        .setBrand(result.getString(INV_BRD_TBL))
-                        .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
-                        .setPrice(result.getFloat(INV_MO_PR))
-                        .build();
-
-                student = new Student.Builder()
-                        .setFirstName(result.getString(PER_FST_N_COL))
-                        .setLastName(result.getString(PER_LST_N_COL))
-                        .setStudentId(result.getInt(STU_PK_COL))
-                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
-                        .build();
-
-                rentingRecords.add(new RentingRecord(rentedInstrument, student));
+                rentingRecords.add(fetchRentingRecord(result));
             }
             connection.commit();
         }
