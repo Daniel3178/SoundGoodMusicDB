@@ -44,19 +44,26 @@ public class BlockingInterpreter
                 switch (cmdLine.getCmd())
                 {
                     case LIST_A_I -> handleListAvaInst(cmdLine);
-
                     case RENT -> handleRent(cmdLine);
-
                     case LIST_R_I -> handleListRentInst(cmdLine);
-
                     case TERMINATE_RENT -> handleTerminateRental(cmdLine);
-
                     case QUIT -> keepReceivingCmds = false;
-
                     case HELP -> handleHelp();
-
                     default -> System.out.println("Illegal command");
                 }
+            }
+
+            catch (NumberFormatException e)
+            {
+                System.out.println("Pls enter correct format!");
+            }
+            catch (DatabaseException dbException)
+            {
+                System.out.println("Ops! There has been an issue with connecting to database, pls try again");
+            }
+            catch (RentalLimitException | NotExistInDatabaseException rentalException)
+            {
+                System.out.println(rentalException.getMessage());
             }
             catch (Exception e)
             {
@@ -64,7 +71,6 @@ public class BlockingInterpreter
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -81,124 +87,73 @@ public class BlockingInterpreter
     }
 
     private void handleTerminateRental(CmdLine cmdLine)
+            throws NumberFormatException, DatabaseException, NotExistInDatabaseException
     {
-        try
-        {
-            RentingDTO rentingInfo = ctrl.terminateRent(Integer.parseInt(cmdLine.getParameter(0)));
-            System.out.printf("The rental record with ID: %-3d" +
-                            "has been officially terminated as of %-12s.\n",
-                    rentingInfo.getRentId(),
-                    rentingInfo.getEndDate()
-            );
-        }
-        catch (NumberFormatException e)
-        {
-            System.out.println("Pls enter correct format!");
-        }
-        catch (DatabaseException dbExc)
-        {
-            System.out.println(
-                    "Ops! There has been an issue with connecting to database, pls try " + "again");
-        }
-        catch (NotExistInDatabaseException notExistInDatabaseException)
-        {
-            System.out.println(notExistInDatabaseException.getMessage());
-        }
+        RentingDTO rentingInfo = ctrl.terminateRent(Integer.parseInt(cmdLine.getParameter(0)));
+        System.out.printf("The rental record with ID: %-3d" +
+                                  "has been officially terminated as of %-12s.\n",
+                          rentingInfo.getRentId(),
+                          rentingInfo.getEndDate()
+        );
     }
 
     private void handleListRentInst(CmdLine cmdLine)
+            throws NumberFormatException, DatabaseException, NotExistInDatabaseException
     {
         List<? extends RentingRecord> rentedInstruments;
-        try
+        if (cmdLine.getParameter(0).isEmpty())
         {
-            if (cmdLine.getParameter(0).isEmpty())
-            {
-                rentedInstruments = ctrl.getAllRentedInstrument();
-            }
-            else
-            {
-                rentedInstruments =
-                        ctrl.getRentedInstrumentByStudentId(Integer.parseInt(cmdLine.getParameter(0)));
-            }
-            for (RentingRecord rentedInstrument : rentedInstruments)
-            {
-                System.out.println(rentedInstrument.toString());
-            }
+            rentedInstruments = ctrl.getAllRentedInstrument();
         }
-        catch (NumberFormatException e)
+        else
         {
-            System.out.println("Pls enter correct format!");
+            rentedInstruments =
+                    ctrl.getRentedInstrumentByStudentId(Integer.parseInt(cmdLine.getParameter(0)));
         }
-        catch (DatabaseException dbExc)
+        for (RentingRecord rentedInstrument : rentedInstruments)
         {
-            System.out.println("Ops! There has been an issue with connecting to database, pls try " +
-                    "again");
-        }
-        catch (NotExistInDatabaseException notExistInDatabaseException)
-        {
-            System.out.println(notExistInDatabaseException.getMessage());
+            System.out.println(rentedInstrument.toString());
         }
     }
 
-    private void handleListAvaInst(CmdLine cmdLine)
+    private void handleListAvaInst(CmdLine cmdLine) throws DatabaseException
     {
         List<? extends InstrumentDTO> instruments;
-        try
+
+        if (cmdLine.getParameter(0).isEmpty())
         {
-            if (cmdLine.getParameter(0).isEmpty())
-            {
-                instruments = ctrl.getAllAvailableInstruments();
-            }
-            else
-            {
-                instruments =
-                        ctrl.getAvailableInstrumentsByType(capitaliseFirstLetter(cmdLine.getParameter(0)));
-            }
-            for (InstrumentDTO instrument : instruments)
-            {
-                System.out.printf("Instrument id: %-5d | Type: %-15s | Brand: %-15s | Price: $%-10s%n",
-                        instrument.getInstrumentId(),
-                        instrument.getModel(),
-                        instrument.getBrand(),
-                        instrument.getPrice()
-                );
-            }
+            instruments = ctrl.getAllAvailableInstruments();
         }
-        catch (DatabaseException e)
+        else
         {
-            System.out.println("Ops! There has been an issue with connecting to database, pls try " +
-                    "again");
+            instruments =
+                    ctrl.getAvailableInstrumentsByType(capitaliseFirstLetter(cmdLine.getParameter(0)));
         }
+        for (InstrumentDTO instrument : instruments)
+        {
+            System.out.printf("Instrument id: %-5d | Type: %-15s | Brand: %-15s | Price: $%-10s%n",
+                              instrument.getInstrumentId(),
+                              instrument.getModel(),
+                              instrument.getBrand(),
+                              instrument.getPrice()
+            );
+        }
+
     }
 
     private void handleRent(CmdLine cmdLine)
+            throws NumberFormatException, DatabaseException, RentalLimitException, NotExistInDatabaseException
     {
-        try
-        {
-            RentingDTO rentingInfo = ctrl.rent(Integer.parseInt(cmdLine.getParameter(0)),
-                    Integer.parseInt(cmdLine.getParameter(1)));
-            System.out.printf("Renting successful! A new rental record for the student with ID: " +
-                            "%-3d, " +
-                            "has been officially submitted as of %-12s. " +
-                            "The student has now rented a total of %d instruments.\n",
-                    rentingInfo.getStudentId(),
-                    rentingInfo.getStartDate(),
-                    rentingInfo.getStudentCurrNoOfBorrowedIns()
-            );
-        }
-        catch (NumberFormatException e)
-        {
-            System.out.println("Pls enter correct format!");
-        }
-        catch (DatabaseException dbException)
-        {
-            System.out.println("Ops! There has been an issue with connecting to database, pls try " +
-                    "again");
-        }
-        catch (RentalLimitException | NotExistInDatabaseException rentalException)
-        {
-            System.out.println(rentalException.getMessage());
-        }
+        RentingDTO rentingInfo = ctrl.rent(Integer.parseInt(cmdLine.getParameter(0)),
+                                           Integer.parseInt(cmdLine.getParameter(1)));
+        System.out.printf("Renting successful! A new rental record for the student with ID: " +
+                                  "%-3d, " +
+                                  "has been officially submitted as of %-12s. " +
+                                  "The student has now rented a total of %d instruments.\n",
+                          rentingInfo.getStudentId(),
+                          rentingInfo.getStartDate(),
+                          rentingInfo.getStudentCurrNoOfBorrowedIns()
+        );
     }
 
     private String capitaliseFirstLetter(String name)

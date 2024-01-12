@@ -4,7 +4,6 @@ public enum Command
 {
     LIST_A_I,
     LIST_R_I,
-    // rental records
     RENT,
     TERMINATE_RENT,
     HELP,

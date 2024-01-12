@@ -81,11 +81,11 @@ public class SoundGoodMusicDAO
             while (result.next())
             {
                 instruments.add(new RentalInstrument.Builder()
-                        .setInstrumentId(result.getInt(INST_PK_COL))
-                        .setModel(result.getString(INV_MDL_TBL))
-                        .setBrand(result.getString(INV_BRD_TBL))
-                        .setPrice(result.getFloat(INV_MO_PR))
-                        .build());
+                                        .setInstrumentId(result.getInt(INST_PK_COL))
+                                        .setModel(result.getString(INV_MDL_TBL))
+                                        .setBrand(result.getString(INV_BRD_TBL))
+                                        .setPrice(result.getFloat(INV_MO_PR))
+                                        .build());
             }
             connection.commit();
         }
@@ -108,11 +108,11 @@ public class SoundGoodMusicDAO
             while (result.next())
             {
                 instruments.add(new RentalInstrument.Builder()
-                        .setInstrumentId(result.getInt(INST_PK_COL))
-                        .setModel(result.getString(INV_MDL_TBL))
-                        .setBrand(result.getString(INV_BRD_TBL))
-                        .setPrice(result.getFloat(INV_MO_PR))
-                        .build());
+                                        .setInstrumentId(result.getInt(INST_PK_COL))
+                                        .setModel(result.getString(INV_MDL_TBL))
+                                        .setBrand(result.getString(INV_BRD_TBL))
+                                        .setPrice(result.getFloat(INV_MO_PR))
+                                        .build());
             }
             connection.commit();
         }
@@ -163,6 +163,33 @@ public class SoundGoodMusicDAO
             handleException(failureMsg);
         }
         return rentingRecords;
+    }
+
+    private RentingRecord fetchNextRentingRecord(ResultSet result, String failureMsg) throws DatabaseException {
+        try {
+            if (result.next()) {
+                RentalInstrument rentalInstrument = new RentalInstrument.Builder()
+                        .setRentId(result.getInt(RENT_SYS_PK_COL))
+                        .setInstrumentId(result.getInt(INST_PK_COL))
+                        .setModel(result.getString(INV_MDL_TBL))
+                        .setBrand(result.getString(INV_BRD_TBL))
+                        .setStartRentingDate(result.getString(RENT_SYS_START_RENT_DATE_COL))
+                        .setPrice(result.getFloat(INV_MO_PR))
+                        .build();
+
+                Student student = new Student.Builder()
+                        .setFirstName(result.getString(PER_FST_N_COL))
+                        .setLastName(result.getString(PER_LST_N_COL))
+                        .setStudentId(result.getInt(STU_PK_COL))
+                        .setNumberOfBorrowedInstrument(result.getInt(DER_NO_OF_BD_INST_COL))
+                        .build();
+
+                return new RentingRecord(rentalInstrument, student);
+            }
+        } catch (SQLException e) {
+            handleException(failureMsg);
+        }
+        return null;
     }
 
     public List<RentingRecord> findRentedInstrumentsByStudentId(int studentId) throws DatabaseException,
@@ -309,7 +336,8 @@ public class SoundGoodMusicDAO
         }
     }
 
-    public RentalInstrument findInstrumentIfAvailableById(int instrumentId, boolean lockingExclusive) throws DatabaseException
+    public RentalInstrument findInstrumentIfAvailableById(int instrumentId, boolean lockingExclusive)
+            throws DatabaseException
     {
         String failureMsg = "Could not list instruments";
         PreparedStatement stmtToExecute = lockingExclusive ? findAvailableInstrumentByIdLockingForUpdateStmt
@@ -425,7 +453,7 @@ public class SoundGoodMusicDAO
         try
         {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/SoundGoodMusic",
-                    username, password);
+                                                     username, password);
             connection.setAutoCommit(false);
         }
         catch (SQLException e)
