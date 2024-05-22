@@ -11,6 +11,32 @@ Acknowledgments:
 This project uses some utility code from the [jdbc-bank] (https://github/KTH-IV1351/jdbc-bank.git) such as reading
 user's input and database connection tools which was provided by the course.
 
+SETUP:
+1. Install docker on your machine, you can visit https://www.docker.com/get-started/ for info
+2. Make sure you have docker installed by running "docker -v" command in terminal, you should be getting information about client and server
+3. Clone the project on your machine or download it as a zip file
+4. Navigate to the project directory via terminal "/SoundGoodMusicDB"
+5. Run the following commands in terminal to get the application up and running:
+
+   `docker-compose up -d`
+
+   `docker network create sound-good-music-network`
+
+   `docker network connect sound-good-music-network sound-good-music-database`
+
+   `docker network connect sound-good-music-network sound-good-music-application`
+
+   `docker container exec -i -t sound-good-music-application /bin/bash`
+
+   `java -jar SoundGoodMusicDB-1.0-SNAPSHOT.jar`
+
+
+6. [ALTERNATIVE] Once you are done, you can run the commands below to get rid of the containers 
+
+   `exit`
+
+   `docker-compose down`
+
 Commands and Usages:
 
     1. LIST_A_I:

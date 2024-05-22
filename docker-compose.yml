@@ -1,0 +1,23 @@
+services:
+  sound_good_music_postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    container_name: sound-good-music-database
+    image: sound-good-music-db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres:/var/lib/postgres/data
+  sound_good_music_java_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.application
+    container_name: sound-good-music-application
+    image: sound-good-music-app
+    tty: true
+    depends_on:
+      - sound_good_music_postgres
+
+volumes:
+  postgres:

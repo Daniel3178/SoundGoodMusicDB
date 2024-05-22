@@ -1,0 +1,7 @@
+FROM postgres:latest
+
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=123456
+ENV POSTGRES_DB=SoundGoodMusic
+
+COPY ./src/main/resources/data-MASTER.sql /docker-entrypoint-initdb.d/

@@ -25,7 +25,8 @@ public class Main
             }
             catch (DatabaseException e)
             {
-                System.out.println("Could not connect to the database!");
+                System.out.println("Could not connect to the database!" + e.getMessage());
+
             }
             catch (WrongCredentialException e)
             {

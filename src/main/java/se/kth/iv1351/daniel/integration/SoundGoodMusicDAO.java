@@ -408,12 +408,13 @@ public class SoundGoodMusicDAO
     {
         try
         {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/SoundGoodMusic",
+            connection = DriverManager.getConnection("jdbc:postgresql://sound-good-music-database:5432/SoundGoodMusic",
                                                      username, password);
             connection.setAutoCommit(false);
         }
         catch (SQLException e)
         {
+            System.out.println(e.getMessage());
             throw new WrongCredentialException();
         }
     }
