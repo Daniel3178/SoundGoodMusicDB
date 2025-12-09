@@ -1,44 +1,46 @@
+<h1>
 Project Title: SoundGoodMusic Rental System
-
+</h1>
+<h2>
 Description:
-
+</h2>
+<p>
 This console-based program, developed as the final project for the IV1351 course, allows users to interact with the 
 SoundGoodMusic database. The program facilitates the rental, termination, and retrieval of information on available and 
-rented musical instruments.
-<img src="./src/main/resources/SoundGoodMusicDB.png" width="300">
+rented musical instruments. This project is fully containarized and has a clear setup instruction - scroll down to see the instruction. 
+The physical model of this database is shown in the diagram below. 
+</p>
+<img src="./src/main/resources/SoundGoodMusicDB.png" width="900">
 
+<h3>
 Acknowledgments:
+</h3>
 
 This project uses some utility code from the [jdbc-bank] (https://github/KTH-IV1351/jdbc-bank.git) such as reading
 user's input and database connection tools which was provided by the course.
 
+<h2>
 SETUP:
+</h2>
 1. Install docker on your machine, you can visit https://www.docker.com/get-started/ for info
 2. Make sure you have docker installed by running "docker -v" command in terminal, you should be getting information about client and server
 3. Clone the project on your machine or download it as a zip file
 4. Navigate to the project directory via terminal "/SoundGoodMusicDB"
 5. Run the following commands in terminal to get the application up and running:
-
+<code>
    `docker-compose up -d`
-
    `docker network create sound-good-music-network`
-
    `docker network connect sound-good-music-network sound-good-music-database`
-
    `docker network connect sound-good-music-network sound-good-music-application`
-
    `docker container exec -i -t sound-good-music-application /bin/bash`
-
    `java -jar SoundGoodMusicDB-1.0-SNAPSHOT.jar`
-
-
 6. [ALTERNATIVE] Once you are done, you can run the commands below to get rid of the containers 
-
    `exit`
-
    `docker-compose down`
-
+</code>
+<h3>
 Commands and Usages:
+</h3>
 
     1. LIST_A_I:
         - 'LIST_A_I gui..': 
@@ -82,7 +84,8 @@ Commands and Usages:
     Note: 
         This program has been built by MAVEN and includes a dependency 
         "postgresql", make sure it is configured properly.
-        
+
+<footer>
 Developer:
     Daniel Ibrahimi
 
@@ -91,3 +94,4 @@ Course:
 
 Date:
     29-12/23
+</footer>
