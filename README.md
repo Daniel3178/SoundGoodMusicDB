@@ -5,6 +5,7 @@ Description:
 This console-based program, developed as the final project for the IV1351 course, allows users to interact with the 
 SoundGoodMusic database. The program facilitates the rental, termination, and retrieval of information on available and 
 rented musical instruments.
+<img src="./src/main/resources/SoundGoodMusicDB.png" width="300">
 
 Acknowledgments:
 
